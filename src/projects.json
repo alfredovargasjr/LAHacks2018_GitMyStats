@@ -1,0 +1,73 @@
+
+{ 
+    "History-AutoDelete": {  
+    "description": "An annoyance that I had with Google Maps was that every time I moved the map, it would spawn 3-4 history entries. So, after 5 minutes, I might have over 100 history entries. This extension is supposed to stop that from happening. This project introduced me to HTML, CSS, and JavaScript; it would also jump start me in the world of web development and web apps.",
+    "projectLinks": [
+      {
+        "linkName": "Chrome",
+        "linkType": "PRODUCT",
+        "linkURL": "https://chrome.google.com/webstore/detail/history-autodelete/bhfakmaiadhflpjloimlagikhodjiefj"
+      },
+      {
+        "linkName": "Firefox",
+        "linkType": "PRODUCT",
+        "linkURL": "https://addons.mozilla.org/firefox/addon/history-autodelete"
+      },
+      {
+        "linkName": "Softpedia Review",
+        "linkType": "MEDIA",
+        "linkURL": "http://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/History-AutoDelete-for-Chrome.shtml"
+      }
+
+    ],
+    "src": "history-autodelete.gif",
+    "alt": "A GIF showing how History AutoDelete can prevent multiple history entries from the same domain"
+  },
+  "Cookie-AutoDelete": {
+    "description": "After History AutoDelete, I wanted to port Self Destructing Cookies which I think is an amazing cookie policy for web browsers that compromises between privacy and convenience. This extension will delete all unused cookies on tab close. Unused means that if all google.com tabs are closed then google.com cookies are cleared. This helps people set what cookies they want to keep and then forget about it (meaning you don't have to micromanage it).",
+    "projectLinks": [
+      {
+        "linkName": "Chrome",
+        "linkType": "PRODUCT",
+        "linkURL": "https://chrome.google.com/webstore/detail/cookie-autodelete/fhcgjolkccmbidfldomjliifgaodjagh"
+      },
+      {
+        "linkName": "Firefox",
+        "linkType": "PRODUCT",
+        "linkURL": "https://addons.mozilla.org/firefox/addon/cookie-autodelete"
+      },
+      {
+        "linkName": "Softpedia Review",
+        "linkType": "MEDIA",
+        "linkURL": "http://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/Cookie-AutoDelete.shtml"
+      },
+      {
+        "linkName": "Ghacks Review",
+        "linkType": "MEDIA",
+        "linkURL": "https://www.ghacks.net/2017/05/15/cookie-autodelete-for-firefox-webextension/"
+      }
+    ],
+
+    "src": "cookie-autodelete.gif",
+    "alt": "A GIF showing the cleanup operation of Cookie AutoDelete on github.com"
+  },
+  "mrdokenny.github.io": {
+    "description": "Using a boilerplate as a starting point, I turned it into what you see here today. All this was from scratch using React Components and BootStrap, taking into inspiration of my old website which was a template. The result is a personal website with more modern components (React Framework and BootStrap 3 via React-BootStrap) and easier expandability (maybe a blog?).",
+    "projectLinks": [
+      {
+        "linkName": "Original Boilerplate",
+        "linkType": "GITHUB",
+        "linkURL": "http://spa-github-pages.rafrex.com/"
+      }
+    ],
+
+    "src": "website-pic.jpg",
+    "alt": "The home page of this website"
+  },
+  "TicTacTuring": {
+    "description": "To get me to learn React Native, which is using the framework of React to create mobile apps, I created a simple TicTacToe game that is inspired from Lynda.com's TicTacTuring that was written in React-DOM. The main addition is that it also connects to a serverless backend, GraphCool. With that, users can login and see the history of all their games.",
+    "projectLinks": [],
+    "src": "TicTacTuring.gif",
+    "alt": "A GIF showing how the mobile app operates"
+  }
+}

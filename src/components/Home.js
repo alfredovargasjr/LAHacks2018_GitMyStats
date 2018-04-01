@@ -45,7 +45,8 @@ class Home extends React.Component
 		error: 0,
 		loading: true,
 		userName: "",
-		flag: false
+		flag: false,
+		expLevel: this.calcTotalExp(75)
 	}
 
 	callAPI()
@@ -61,12 +62,12 @@ class Home extends React.Component
 				{
 					this.setState({ fetchedObject });
 				}
+				console.log(fetchedObject);
 				return fetch(`https://api.github.com/users/${this.state.userName}`);
 			})
 			.then((response) => response.json())
 			.then((fetchedProfile) =>
 			{
-				console.log(fetchedProfile);
 				if (fetchedProfile.error !== undefined)
 				{
 					this.setState({ error: fetchedProfile.error });
@@ -77,10 +78,20 @@ class Home extends React.Component
 			})
 			.catch((error) => this.setState({ error }));
 	}
-
-
+	calcTotalExp(maxLevel)
+	{
+		let points = 0;
+		let lvl = 0;
+		let exp = [];
+		for (lvl = 0; lvl <= maxLevel; lvl++)
+		{
+			points += Math.floor(lvl + 20);
+			exp[lvl] = points;
+		}
+		return exp;
+	}
 	render() {
-		const { flag, loading, error, fetchedObject: { languagesScore, languagesScoreDiff, recentCommit, topContributedRepos } } = this.state;
+		const { flag, expLevel, loading, error, fetchedObject: { languagesScore, languagesScoreDiff, recentCommit, topContributedRepos } } = this.state;
 		// flag = false, start at the home screen
 		if (!flag)
 		{
@@ -132,10 +143,11 @@ class Home extends React.Component
 		// destructor of json fetchedProfile
 		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url, } } = this.state;
 		let total = 0;
+		// const expLevel = this.calcTotalExp(75);
 		// Display window of profle with stats
 		return (
 			<Grid>
-				 {/* textbox for the prompt username profile */}
+				{/* textbox for the prompt username profile */}
 				<Row style={{ padding: "15px", align: "center" }}>
 					<Col xs={8} sm={10}>
 						<Form>
@@ -154,7 +166,9 @@ class Home extends React.Component
 							</InputGroup>
 						</Form >
 					</Col>
-
+					<Col xs={8} sm={10}>
+						
+					</Col>
 					<Col xs={4} sm={2}>
 						<Button bsStyle="primary" bsSize="large"
 							onClick={() => {
@@ -210,12 +224,23 @@ class Home extends React.Component
 								Object.keys(languagesScore).map((key, index) =>
 								{
 									total += languagesScore[key];
-									console.log(total);
-									const diff = (languagesScoreDiff[key] / maxLevel) * 100;
-									const value = ((languagesScore[key] - languagesScoreDiff[key]) / maxLevel) * 100;
+									let level = 0;
+									console.log(expLevel);
+									for (let lvl = 0; lvl < expLevel.length; lvl++)
+									{
+										if (languagesScore[key] < expLevel[lvl])
+										{
+											level = lvl;
+											break;
+										}
+										level = 51;
+									}
+									const diff = (languagesScoreDiff[key] / expLevel[level]) * 100;
+									const value = ((languagesScore[key] - languagesScoreDiff[key]) / expLevel[level]) * 100;
 									return (
 										<div key={index + key}>
-											<p>{key}<b>{` +${languagesScoreDiff[key]}`}</b></p>
+											<p>{key}<b>{` Level: ${level}`}</b></p>
+											<p>Gain: <b>{` +${languagesScoreDiff[key]}`}</b></p>
 											<ProgressBar>
 												<ProgressBar striped bsStyle={bsColors[index % bsColors.length]} now={value} />
 												<ProgressBar striped bsStyle={bsColors[index - 1 % bsColors.length]} now={diff} />

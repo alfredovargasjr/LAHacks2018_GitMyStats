@@ -11,6 +11,7 @@ import {
 	FormControl,
 	Jumbotron
 } from "react-bootstrap";
+import TopFive from "./TopFive";
 import LinkContainer from "react-router-bootstrap/lib/LinkContainer";
 import { SocialIcon } from "react-social-icons";
 import Card from "./Card";
@@ -38,6 +39,11 @@ const bsColors = ["success", "info", "warning", "danger"];
 
 class Home extends React.Component
 {
+	constructor(props)
+	{
+		super(props);
+		this.callAPI = this.callAPI.bind(this);
+	}
 	state = {
 		fetchedObject: { languagesScore: {}, languagesScoreDiff: {}, recentCommit: {}, topContributedRepos: [] },
 		fetchedProfile: {},
@@ -48,9 +54,9 @@ class Home extends React.Component
 		expLevel: this.calcTotalExp(200)
 	}
 
-	callAPI()
+	callAPI(userName)
 	{
-		fetch(`https://api.kennydo.com/githubstats?user=${this.state.userName}`)
+		fetch(`https://api.kennydo.com/githubstats?user=${userName}`)
 			.then((response) => response.json())
 			.then((fetchedObject) =>
 			{
@@ -61,7 +67,7 @@ class Home extends React.Component
 				{
 					this.setState({ fetchedObject });
 				}
-				return fetch(`https://api.github.com/users/${this.state.userName}`);
+				return fetch(`https://api.github.com/users/${userName}`);
 			})
 			.then((response) => response.json())
 			.then((fetchedProfile) =>
@@ -71,11 +77,12 @@ class Home extends React.Component
 					this.setState({ error: fetchedProfile.error });
 				} else
 				{
-					this.setState({ fetchedProfile, loading: false, flag: true });
+					this.setState({ fetchedProfile, loading: false, flag: true, userName });
 				}
 			})
 			.catch((error) => this.setState({ error }));
 	}
+
 	calcTotalExp(maxLevel)
 	{
 		let points = 0;
@@ -102,25 +109,28 @@ class Home extends React.Component
 							position: "relative",
 							width: "100%"
 						}}>
-							<h1 style={{ marginBottom: "25px" }}>Git My Stats</h1>
+							<h1 style={{ marginBottom: "25px" }}><b>Git My Stats</b></h1>
 							<p >Powered by the Github API, our customer API, and a data analytic server, this website has all its data pulled from our express server using the GitHub API. The <a href="https://api.kennydo.com/">express server</a> crunches the raw data to get these stats for the user.</p>
 							<p><i>Free servers are used at this moment, the cards might take a while to load if the server has slept. Please be patient :)</i></p>
 						</Jumbotron>
 						<h2 style={{ marginLeft: "15px", align: "center" }}>
 							<b>Enter Github Username:</b>
-                    	</h2>
+						</h2>
 					</Col>
 					<Col xs={12} sm={8} style={{ backgroundColor: "lightgrey", borderRadius: "7px" }}>
 						<Form>
 							<InputGroup style={{
-								width: "100%", marginBottom: "15px" }} bsSize="large" width={100}>
+								width: "100%", marginBottom: "15px"
+							}} bsSize="large" width={100}>
 								<FormControl
 									type="text"
 									value={this.state.username}
-									onKeyPress={(e) => {
-										if (e.key === "Enter") {
+									onKeyPress={(e) =>
+									{
+										if (e.key === "Enter")
+										{
 											e.preventDefault();
-											this.callAPI();
+											this.callAPI(this.state.username);
 										}
 									}}
 									onChange={(e) => this.setState({ userName: e.target.value })}
@@ -130,15 +140,17 @@ class Home extends React.Component
 					</Col>
 					<Col xs={4} sm={4}>
 						<Button bsStyle="primary" bsSize="large" style={{ marginBottom: "10px" }}
-							onClick={() => {
-								this.callAPI();
+							onClick={() =>
+							{
+								this.callAPI(this.state.username);
 							}}>Enter</Button>
 					</Col>
+					<TopFive callAPI={this.callAPI}/>
 				</Grid>
 			);
 		}
 		// destructor of json fetchedProfile
-		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url, } } = this.state;
+		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url } } = this.state;
 		let totalPoints = 0;
 		Object.keys(languagesScore).forEach((key) =>
 		{
@@ -154,8 +166,6 @@ class Home extends React.Component
 			}
 			level = expLevel.length;
 		}
-		console.log(totalPoints);
-		console.log();
 		const value = ((totalPoints - expLevel[level - 1]) / (expLevel[level] - expLevel[level - 1])) * 100;
 		// const expLevel = this.calcTotalExp(75);
 		// Display window of profile with stats
@@ -173,7 +183,7 @@ class Home extends React.Component
 									onKeyPress={(e) => {
 										if (e.key === "Enter") {
 											e.preventDefault();
-											this.callAPI();
+											this.callAPI(this.state.username);
 										}
 									}}
 									onChange={(e) => this.setState({ userName: e.target.value })} placeholder="Git Me That Username..." />
@@ -183,7 +193,7 @@ class Home extends React.Component
 					<Col xs={4} sm={2}>
 						<Button bsStyle="primary" bsSize="large"
 							onClick={() => {
-								this.callAPI();
+								this.callAPI(this.state.username);
 							}}>Enter</Button>
 					</Col>
 				</Row>

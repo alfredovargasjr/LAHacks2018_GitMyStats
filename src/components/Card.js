@@ -5,9 +5,9 @@ import {
 } from "react-bootstrap";
 class Card extends React.Component {
 	render() {
-		const { loading, title, error } = this.props;
+		const { loading, title, error, onClick } = this.props;
 		return (
-			<Panel>
+			<Panel onClick={onClick}>
 				<Panel.Heading>
 					<Panel.Title componentClass="h3">{title}</Panel.Title>
 				</Panel.Heading>

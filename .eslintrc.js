@@ -61,7 +61,7 @@ module.exports = {
     "jsx-quotes": [2, "prefer-double"],
     "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
     "keyword-spacing": 2,
-    "linebreak-style": [2, "unix"],
+    "linebreak-style": [0, "unix"],
     "lines-around-comment": [2, {"beforeBlockComment": true, "allowObjectStart": true}],
     "max-depth": [2, 4],
     "max-len": 0,

@@ -117,6 +117,7 @@ class Home extends React.Component
 							<b>Enter Github Username:</b>
 						</h2>
 					</Col>
+					{/* textbox for prompt username */}
 					<Col xs={12} sm={8} style={{ backgroundColor: "lightgrey", borderRadius: "7px" }}>
 						<Form>
 							<InputGroup style={{
@@ -138,13 +139,15 @@ class Home extends React.Component
 							</InputGroup>
 						</Form >
 					</Col>
+					{/* enter username button*/}
 					<Col xs={4} sm={4}>
-						<Button bsStyle="primary" bsSize="large" style={{ marginBottom: "10px" }}
+						<Button bsStyle="primary" bsSize="large" style={{ marginBottom: "20px" }}
 							onClick={() =>
 							{
 								this.callAPI(this.state.username);
 							}}>Enter</Button>
 					</Col>
+					{/* the top five card at the button of home */}
 					<TopFive callAPI={this.callAPI}/>
 				</Grid>
 			);
@@ -200,8 +203,14 @@ class Home extends React.Component
 				{/* The profile information, display info if not null */}
 				<Col xs={12} sm={4}>
 					<Thumbnail src={avatar_url} alt={""}>
-						<h2 style={styles.center}>{name}</h2>
+						<h2 style={styles.center}><b>{name}</b></h2>
 						<h4 style={{ textAlign: "center", fontSize: "20px", fontStyle: "normal", fontWeight: "300", lineHeight: "24px", color: "grey" }}><i>{login}</i></h4>
+						<div style={{
+							width: "100%",
+							height: "0px",
+							borderBottom: "1px solid black",
+							opacity: "0.2"
+						 }}></div>
 						{
 							bio !== null && <div>
 								<h4>Bio</h4>

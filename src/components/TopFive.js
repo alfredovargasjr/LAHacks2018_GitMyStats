@@ -41,25 +41,25 @@ class TopFive extends React.Component
     	return (
 
     		<Col xs={12} sm={12}>
-            	<Jumbotron>
-            		<h2><b>Top Five Programmers</b></h2>
-            		<p>Show Us What You Got!</p>
-            		<ol>
+    			<Jumbotron style={{ padding: "30px" }}>
+    				<h2 style={{ marginTop: "0px" }}><b>Top Five Programmers</b></h2>
+    				<p style={{ fontSize: "15px" }}>Show Us What You Got!</p>
             			{
     						fetchedTopFive.data.map((obj, index) =>
-                                <Card
-                                    onClick={() => this.props.callAPI(obj.user)}    
+    							<Card
+    							onClick={() =>
+    							{
+    								this.props.callAPI(obj.user);
+    								document.documentElement.scrollTop = 0;
+    							}}
     								key={obj.user + obj.score}
-                                    title={`${index + 1}. ${obj.user}`}
-                                    
+    								title={`${index + 1}. ${obj.user}`}
+    								style={{ fontSize: "20px" }}
     							>
     								<p>Total Score: {obj.totalScore}</p>
     							</Card>
-
-            					/* <li key={obj.user + obj.score}>{`${obj.user}: ${obj.totalScore}`}</li>*/
     						)
             			}
-            		</ol>
             	</Jumbotron>
     		</Col>
     	);

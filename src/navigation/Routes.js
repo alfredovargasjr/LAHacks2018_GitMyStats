@@ -10,40 +10,17 @@ const HomeRoute = Loadable({
 	loading: LoadingComponent
 });
 
-const ProjectsRoute = Loadable({
-	loader: () => import("../components/Projects"),
-	loading: LoadingComponent
-});
-
-const AboutRoute = Loadable({
-	loader: () => import("../components/About"),
-	loading: LoadingComponent
-});
-
-const ContactRoute = Loadable({
-	loader: () => import("../components/Contact"),
-	loading: LoadingComponent
-});
-
 const PageNotFoundRoute = Loadable({
 	loader: () => import("../components/PageNotFound"),
 	loading: LoadingComponent
 });
 
-const RedirectRoute = Loadable({
-	loader: () => import("../components/Redirect"),
-	loading: LoadingComponent
-});
 
 const RoutePath = ({
 	location
 }) => (
 	<Switch key={location.key} location={location}>
 		<Route exact path="/" component={HomeRoute} />		
-		<Route exact path="/projects" component={ProjectsRoute} />
-		<Route exact path="/about" component={AboutRoute} />
-		<Route exact path="/contact" component={ContactRoute} />
-		<Route exact path="/redirect" component={RedirectRoute} />
 		<Route component={PageNotFoundRoute} />
 	</Switch>
 );

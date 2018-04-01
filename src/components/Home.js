@@ -13,10 +13,8 @@ import {
 } from "react-bootstrap";
 import LinkContainer from "react-router-bootstrap/lib/LinkContainer";
 import { SocialIcon } from "react-social-icons";
-import BioPic from "../img/cartoon_crop.png";
 import Card from "./Card";
 import ColorfulPieChart from "./ColorfulPieChart";
-import Feedback from "./Feedback";
 
 const styles = {
 	center: {

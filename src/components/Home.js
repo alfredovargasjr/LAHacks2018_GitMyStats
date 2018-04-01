@@ -56,6 +56,7 @@ class Home extends React.Component
 
 	callAPI(userName)
 	{
+		console.log(userName);
 		fetch(`https://api.kennydo.com/githubstats?user=${userName}`)
 			.then((response) => response.json())
 			.then((fetchedObject) =>
@@ -107,21 +108,24 @@ class Home extends React.Component
 							backgroundColor: "rgb(45, 45, 45)",
 							color: "white",
 							position: "relative",
-							width: "100%"
+							width: "100%",
+							marginBottom: "0px"
 						}}>
 							<h1 style={{ marginBottom: "25px" }}><b>Git My Stats</b></h1>
 							<p >Powered by the Github API, our customer API, and a data analytic server, this website has all its data pulled from our express server using the GitHub API. The <a href="https://api.kennydo.com/">express server</a> crunches the raw data to get these stats for the user.</p>
 							<p><i>Free servers are used at this moment, the cards might take a while to load if the server has slept. Please be patient :)</i></p>
 						</Jumbotron>
-						<h2 style={{ marginLeft: "15px", align: "center" }}>
+					</Col>
+					<Col xs={12} sm={11} smOffset={1}>
+						<h2>
 							<b>Enter Github Username:</b>
 						</h2>
 					</Col>
 					{/* textbox for prompt username */}
-					<Col xs={12} sm={8} style={{ backgroundColor: "lightgrey", borderRadius: "7px" }}>
+					<Col xs={12} sm={8} smOffset={1} style={{ backgroundColor: "lightgrey", borderRadius: "7px" }}>
 						<Form>
 							<InputGroup style={{
-								width: "100%", marginBottom: "15px"
+								width: "100%", marginBottom: "20px"
 							}} bsSize="large" width={100}>
 								<FormControl
 									type="text"
@@ -131,7 +135,7 @@ class Home extends React.Component
 										if (e.key === "Enter")
 										{
 											e.preventDefault();
-											this.callAPI(this.state.username);
+											this.callAPI(this.state.userName);
 										}
 									}}
 									onChange={(e) => this.setState({ userName: e.target.value })}
@@ -140,11 +144,11 @@ class Home extends React.Component
 						</Form >
 					</Col>
 					{/* enter username button*/}
-					<Col xs={4} sm={4}>
+					<Col xs={2} sm={2}>
 						<Button bsStyle="primary" bsSize="large" style={{ marginBottom: "20px" }}
 							onClick={() =>
 							{
-								this.callAPI(this.state.username);
+								this.callAPI(this.state.userName);
 							}}>Enter</Button>
 					</Col>
 					{/* the top five card at the button of home */}
@@ -186,7 +190,7 @@ class Home extends React.Component
 									onKeyPress={(e) => {
 										if (e.key === "Enter") {
 											e.preventDefault();
-											this.callAPI(this.state.username);
+											this.callAPI(this.state.userName);
 										}
 									}}
 									onChange={(e) => this.setState({ userName: e.target.value })} placeholder="Git Me That Username..." />
@@ -196,7 +200,7 @@ class Home extends React.Component
 					<Col xs={4} sm={2}>
 						<Button bsStyle="primary" bsSize="large"
 							onClick={() => {
-								this.callAPI(this.state.username);
+								this.callAPI(this.state.userName);
 							}}>Enter</Button>
 					</Col>
 				</Row>

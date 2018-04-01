@@ -180,7 +180,7 @@ class Home extends React.Component
 			<Grid>
 				{/* textbox for the prompt username profile */}
 				<Row style={{ padding: "15px", align: "center" }}>
-					<Col xs={8} sm={10}>
+					<Col xs={8} sm={8} smOffset={1} xsOffset={0.2}>
 						<Form>
 							<InputGroup style={{
 								width: "100%", marginBottom: "15px" }} bsSize="large" width={100}>
@@ -197,7 +197,7 @@ class Home extends React.Component
 							</InputGroup>
 						</Form >
 					</Col>
-					<Col xs={4} sm={2}>
+					<Col xs={2} sm={2}>
 						<Button bsStyle="primary" bsSize="large"
 							onClick={() => {
 								this.callAPI(this.state.userName);

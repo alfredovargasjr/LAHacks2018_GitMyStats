@@ -45,7 +45,7 @@ class Home extends React.Component
 		loading: true,
 		userName: "",
 		flag: false,
-		expLevel: this.calcTotalExp(75)
+		expLevel: this.calcTotalExp(200)
 	}
 
 	callAPI()
@@ -152,9 +152,11 @@ class Home extends React.Component
 				level = lvl;
 				break;
 			}
-			level = 51;
+			level = expLevel.length;
 		}
-		const value = ((totalPoints) / expLevel[level]) * 100;
+		console.log(totalPoints);
+		console.log();
+		const value = ((totalPoints - expLevel[level - 1]) / (expLevel[level] - expLevel[level - 1])) * 100;
 		// const expLevel = this.calcTotalExp(75);
 		// Display window of profile with stats
 		return (
@@ -214,12 +216,12 @@ class Home extends React.Component
 					<Card
 						loading={loading}
 						error={error}
-						title={"Programming Fitness Level:"}
+						title={"Programming Fitness:"}
 					>
-						<p>Total points scored in commits</p>
+						<p>Level: {level}</p>
 						<ProgressBar>
 							<ProgressBar now={value} />
-						</ProgressBar>;
+						</ProgressBar>
 					</Card>
 					<div style={styles.white}>
 						<dl>
@@ -252,7 +254,7 @@ class Home extends React.Component
 											level = lvl;
 											break;
 										}
-										level = 51;
+										level = expLevel.length;
 									}
 									const diff = (languagesScoreDiff[key] / expLevel[level]) * 100;
 									const value = ((languagesScore[key] - languagesScoreDiff[key]) / expLevel[level]) * 100;

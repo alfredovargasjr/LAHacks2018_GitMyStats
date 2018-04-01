@@ -132,15 +132,17 @@ class Home extends React.Component
 			);
 		}
 		// destructor of json fetchedProfile
-		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login,  html_url,  } } = this.state;
+		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url, } } = this.state;
+		let total = 0;
 		// Display window of profle with stats
 		return (
 			<Grid>
+				 {/* textbox for the prompt username profile */}
 				<Row style={{ padding: "15px", align: "center" }}>
 					<Col xs={8} sm={10}>
 						<Form>
 							<InputGroup style={{
-								width: "100%", marginBottom: "10px" }} bsSize="large" width={100}>
+								width: "100%", marginBottom: "15px" }} bsSize="large" width={100}>
 								<FormControl
 									type="text"
 									value={this.state.userName}
@@ -162,8 +164,9 @@ class Home extends React.Component
 							}}>Enter</Button>
 					</Col>
 				</Row>
+				{/* The profile information, display info if not null */}
 				<Col xs={12} sm={4}>
-					<Thumbnail src={avatar_url} alt={"Cartoon Picture of Kenny Do"}>
+					<Thumbnail src={avatar_url} alt={""}>
 						<h3 style={styles.center}>{name}</h3>
 						<h4 style={styles.center}><i>{login}</i></h4>
 						{
@@ -197,6 +200,7 @@ class Home extends React.Component
 					</div>
 
 				</Col>
+				{/* Display the user skills with progress bats for profile */}
 				<Col xs={12} sm={8}>
 					<Col xs={12} sm={12}>
 						<Card
@@ -205,7 +209,10 @@ class Home extends React.Component
 							title={"Skills Progress"}
 						>
 							{
-								Object.keys(languagesScore).map((key, index) => {
+								Object.keys(languagesScore).map((key, index) =>
+								{
+									total += languagesScore[key];
+									console.log(total);
 									const diff = (languagesScoreDiff[key] / maxLevel) * 100;
 									const value = ((languagesScore[key] - languagesScoreDiff[key]) / maxLevel) * 100;
 									return (

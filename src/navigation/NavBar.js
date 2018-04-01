@@ -16,11 +16,11 @@ const NavBar = () => (
 		<Navbar.Collapse>
 			<Nav>
 
-				<LinkContainer to="/projects">
+				{/* <LinkContainer to="/projects">
 					<NavItem eventKey={1}>
               Projects
 					</NavItem>
-				</LinkContainer>
+				</LinkContainer> */}
 				{/* <LinkContainer to="/about">
 					<NavItem eventKey={2}>
               About Me

@@ -35,7 +35,6 @@ const styles = {
 };
 
 const bsColors = ["success", "info", "warning", "danger"];
-const maxLevel = 5000;
 
 class Home extends React.Component
 {
@@ -62,7 +61,6 @@ class Home extends React.Component
 				{
 					this.setState({ fetchedObject });
 				}
-				console.log(fetchedObject);
 				return fetch(`https://api.github.com/users/${this.state.userName}`);
 			})
 			.then((response) => response.json())
@@ -104,7 +102,7 @@ class Home extends React.Component
 							position: "relative",
 							width: "100%"
 						}}>
-							<h1>Git My Stats</h1>
+							<h1 style={{ marginBottom: "25px" }}>Git My Stats</h1>
 							<p >Powered by the Github API, our customer API, and a data analytic server, this website has all its data pulled from our express server using the GitHub API. The <a href="https://api.kennydo.com/">express server</a> crunches the raw data to get these stats for the user.</p>
 							<p><i>Free servers are used at this moment, the cards might take a while to load if the server has slept. Please be patient :)</i></p>
 						</Jumbotron>
@@ -112,7 +110,6 @@ class Home extends React.Component
 							<b>Enter Github Username:</b>
                     	</h2>
 					</Col>
-
 					<Col xs={12} sm={8} style={{ backgroundColor: "lightgrey", borderRadius: "7px" }}>
 						<Form>
 							<InputGroup style={{
@@ -142,9 +139,24 @@ class Home extends React.Component
 		}
 		// destructor of json fetchedProfile
 		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url, } } = this.state;
-		let total = 0;
+		let totalPoints = 0;
+		Object.keys(languagesScore).forEach((key) =>
+		{
+			totalPoints += languagesScore[key];
+		});
+		let level = 0;
+		for (let lvl = 0; lvl < expLevel.length; lvl++)
+		{
+			if (totalPoints < expLevel[lvl])
+			{
+				level = lvl;
+				break;
+			}
+			level = 51;
+		}
+		const value = ((totalPoints) / expLevel[level]) * 100;
 		// const expLevel = this.calcTotalExp(75);
-		// Display window of profle with stats
+		// Display window of profile with stats
 		return (
 			<Grid>
 				{/* textbox for the prompt username profile */}
@@ -166,9 +178,6 @@ class Home extends React.Component
 							</InputGroup>
 						</Form >
 					</Col>
-					<Col xs={8} sm={10}>
-						
-					</Col>
 					<Col xs={4} sm={2}>
 						<Button bsStyle="primary" bsSize="large"
 							onClick={() => {
@@ -179,8 +188,8 @@ class Home extends React.Component
 				{/* The profile information, display info if not null */}
 				<Col xs={12} sm={4}>
 					<Thumbnail src={avatar_url} alt={""}>
-						<h3 style={styles.center}>{name}</h3>
-						<h4 style={styles.center}><i>{login}</i></h4>
+						<h2 style={styles.center}>{name}</h2>
+						<h4 style={{ textAlign: "center", fontSize: "20px", fontStyle: "normal", fontWeight: "300", lineHeight: "24px", color: "grey" }}><i>{login}</i></h4>
 						{
 							bio !== null && <div>
 								<h4>Bio</h4>
@@ -200,6 +209,18 @@ class Home extends React.Component
 							</div>
 						}
 					</Thumbnail>
+					{/* fitness bar */}
+					{/* <h2 style={{ padding: "0px", marginBottom: "5px" }}>Programming Fitness:</h2> */}
+					<Card
+						loading={loading}
+						error={error}
+						title={"Programming Fitness Level:"}
+					>
+						<p>Total points scored in commits</p>
+						<ProgressBar>
+							<ProgressBar now={value} />
+						</ProgressBar>;
+					</Card>
 					<div style={styles.white}>
 						<dl>
 							<dt>Impressed? Get in touch</dt>
@@ -223,9 +244,7 @@ class Home extends React.Component
 							{
 								Object.keys(languagesScore).map((key, index) =>
 								{
-									total += languagesScore[key];
 									let level = 0;
-									console.log(expLevel);
 									for (let lvl = 0; lvl < expLevel.length; lvl++)
 									{
 										if (languagesScore[key] < expLevel[lvl])
@@ -249,8 +268,7 @@ class Home extends React.Component
 									);
 								})
 							}
-							<i>{"Please don't take this as an accurate representation of my skills but rather take away my 'skill' to data analyse my GitHub Profile :)"}</i>
-							<i>{" Also note that it doesn't take advantage of private repositories."}</i>
+							<i>{"Please don't take this as an accurate representation of the users skills, but rather as an analysis of data from their GitHub Profile :)"}</i>
 						</Card>
 
 					</Col>

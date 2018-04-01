@@ -31,7 +31,7 @@ const styles = {
 		marginRight: "5px"
 	},
 	socialIcons: {
-		marginTop: "5px"
+		marginTop: "0px"
 	}
 };
 
@@ -56,8 +56,7 @@ class Home extends React.Component
 
 	callAPI(userName)
 	{
-		console.log(userName);
-		fetch(`https://api.kennydo.com/githubstats?user=${userName}`)
+		fetch(`https://api.kennydo.com/githubstats?user=${userName.trim()}`)
 			.then((response) => response.json())
 			.then((fetchedObject) =>
 			{
@@ -68,7 +67,7 @@ class Home extends React.Component
 				{
 					this.setState({ fetchedObject });
 				}
-				return fetch(`https://api.github.com/users/${userName}`);
+				return fetch(`https://api.github.com/users/${userName.trim()}`);
 			})
 			.then((response) => response.json())
 			.then((fetchedProfile) =>
@@ -78,7 +77,7 @@ class Home extends React.Component
 					this.setState({ error: fetchedProfile.error });
 				} else
 				{
-					this.setState({ fetchedProfile, loading: false, flag: true, userName });
+					this.setState({ fetchedProfile, loading: false, flag: true, userName: userName.trim() });
 				}
 			})
 			.catch((error) => this.setState({ error }));
@@ -249,7 +248,7 @@ class Home extends React.Component
 					<div style={styles.white}>
 						<dl>
 							<dt>Impressed? Get in touch</dt>
-							<dd><a href={`mailto:${email}`} title="Click to send me an email">{email}</a><br/></dd>
+							{email !== null && <dd><a href={`mailto:${email}`} title="Click to send me an email">{email}</a><br/></dd>}
 						</dl>
 						<div style={styles.socialIcons}>
 							{email !== null && <SocialIcon style={styles.icons} url={`mailto:${email}`} network="email" title="Click to send me an email" />}

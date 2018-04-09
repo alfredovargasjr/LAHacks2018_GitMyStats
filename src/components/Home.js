@@ -56,7 +56,6 @@ class Home extends React.Component
 
 	callAPI(userName)
 	{
-		console.log(userName);
 		fetch(`https://api.kennydo.com/githubstats?user=${userName}`)
 			.then((response) => response.json())
 			.then((fetchedObject) =>
@@ -83,7 +82,7 @@ class Home extends React.Component
 			})
 			.catch((error) => this.setState({ error }));
 	}
-
+	// calculate the points in each level, level system
 	calcTotalExp(maxLevel)
 	{
 		let points = 0;
@@ -91,8 +90,9 @@ class Home extends React.Component
 		let exp = [];
 		for (lvl = 0; lvl <= maxLevel; lvl++)
 		{
-			points += Math.floor(lvl + 20);
 			exp[lvl] = points;
+			points += Math.floor(lvl + 20);
+			// exp[lvl] = points;
 		}
 		return exp;
 	}
@@ -159,21 +159,23 @@ class Home extends React.Component
 		// destructor of json fetchedProfile
 		const { fetchedProfile: { avatar_url, name, bio, company, email, location, login, html_url } } = this.state;
 		let totalPoints = 0;
+		// total score of the user
 		Object.keys(languagesScore).forEach((key) =>
 		{
 			totalPoints += languagesScore[key];
 		});
+		// calculate the level of user
 		let level = 0;
-		for (let lvl = 0; lvl < expLevel.length; lvl++)
+		for (let lvl = 1; lvl < expLevel.length; lvl++)
 		{
 			if (totalPoints < expLevel[lvl])
 			{
-				level = lvl;
+				level = lvl - 1;
 				break;
 			}
 			level = expLevel.length;
 		}
-		const value = ((totalPoints - expLevel[level - 1]) / (expLevel[level] - expLevel[level - 1])) * 100;
+		const value = ((totalPoints - expLevel[level]) / (expLevel[level + 1] - expLevel[level]) * 100);
 		// const expLevel = this.calcTotalExp(75);
 		// Display window of profile with stats
 		return (
@@ -247,7 +249,7 @@ class Home extends React.Component
 						</ProgressBar>
 					</Card>
 					<div style={styles.white}>
-						<dl>
+						<dl style={{ marginBottom: "0px" }}>
 							<dt>Impressed? Get in touch</dt>
 							<dd><a href={`mailto:${email}`} title="Click to send me an email">{email}</a><br/></dd>
 						</dl>
@@ -274,13 +276,13 @@ class Home extends React.Component
 									{
 										if (languagesScore[key] < expLevel[lvl])
 										{
-											level = lvl;
+											level = lvl - 1;
 											break;
 										}
 										level = expLevel.length;
 									}
-									const diff = (languagesScoreDiff[key] / expLevel[level]) * 100;
-									const value = ((languagesScore[key] - languagesScoreDiff[key]) / expLevel[level]) * 100;
+									const diff = (languagesScoreDiff[key] / (expLevel[level + 1] - expLevel[level]) * 100);
+									const value = ((languagesScore[key] - languagesScoreDiff[key] - expLevel[level]) / (expLevel[level + 1] - expLevel[level])) * 100;
 									return (
 										<div key={index + key}>
 											<p>{key}<b>{` Level: ${level}`}</b></p>
